@@ -57,7 +57,7 @@ void Inventory::Update(string t, int n)
 	bool foundItem = false;
 	int num = items.size();
 
-	cout<<"the size of the vector is "<<num<<endl;
+	cout<<"the size of the inventory list is "<<num<<endl;
 
 	for (int i = 0; i < num; i++) {
 		if (items.at(i).name == t){
@@ -77,21 +77,60 @@ void Inventory::Update(string t, int n)
 void Inventory::ListByName()
 {
 	int i;
-	int len = items.size();
-	for (i=0; i<len; i++)
+	//int len = items.size();
+	ListItem temp;
+	int j, k, minIndex, numElts = items.size();
+
+	for (int k = 0; k < numElts; ++k)
 	{
-		cout<<items[i].name<<" "<<items[i].amount<<endl;
+		minIndex = k;
+		for(j=k+1; j < numElts; j++)
+		{
+			if (items[j].name < items[minIndex].name)
+			{
+				minIndex = j;//get the index of the minimum term
+			}
+		}
+		//swap the minimum term with the initial term
+		temp = items[k];
+		items[k] = items[minIndex];
+		items[minIndex] = temp;
 	}
+	
+	for (i=0; i<numElts; i++)
+	{
+		cout<<"List by name: "<<items[i].name<<" "<<items[i].amount<<endl;
+	}	
+
 }
 
 
 void Inventory::ListByQuantity()
 {
 	int i;
-	int len = items.size();
-	for (i=0; i<len; i++)
+	//int len = items.size();
+	ListItem temp;
+	int j, k, minIndex, numElts = items.size();
+
+	for (int k = 0; k < numElts; ++k)
 	{
-		cout<<items[i].name<<" "<<items[i].amount<<endl;
+		minIndex = k;
+		for(j=k+1; j < numElts; j++)
+		{
+			if (items[j].amount < items[minIndex].amount)
+			{
+				minIndex = j;//get the index of the minimum term
+			}
+		}
+		//swap the minimum term with the initial term
+		temp = items[k];
+		items[k] = items[minIndex];
+		items[minIndex] = temp;
+	}
+	
+	for (i=0; i<numElts; i++)
+	{
+		cout<<"List by quantity: "<<items[i].name<<" "<<items[i].amount<<endl;
 	}
 }
 
@@ -111,9 +150,9 @@ int main()
 	while(true)
 	{
 		cout<<"Enter the "<<i<<"th item's name and amount:"<<endl;
-		cout<<"Enter 'q' to quit, 'c' to continue "<<endl;
+		cout<<"Enter 'd' to display the result, 'c' to continue inputing items"<<endl;
 		cin>>flag;
-		if(flag == "q")
+		if(flag == "d")
 		break;
 		else if (flag == "c")
 		{	cin>>name>>amount;
@@ -128,6 +167,7 @@ int main()
 	cout<<"finish loading"<<endl;
 	//Inventory item(Listitem);
 	invent.ListByName();
+	cout<<" "<<endl;
 	invent.ListByQuantity();
 //	cout<<items[0].amount<<endl;
 	
