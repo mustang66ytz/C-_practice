@@ -28,7 +28,7 @@ public:
     int get(int index) {
         SinglyListNode *temp = this->head;
         int tempidx = 0;
-        while(temp->next!=NULL){
+        while(temp!=NULL){
             if(tempidx == index){
                 return temp->val;
             }
@@ -78,6 +78,22 @@ public:
         }
         temp->next = temp->next->next;
     }
+    
+    void display()
+    {
+        SinglyListNode *tmp;
+        tmp = head;
+        while (tmp != NULL)
+        {
+            std::cout << tmp->val << " ";
+            tmp = tmp->next;
+        }
+        std::cout<<std::endl;
+    }
+    
+    SinglyListNode* removeNthFromEnd(SinglyListNode* head, int n) {
+        
+    }
 };
 
 /**
@@ -95,11 +111,17 @@ int main(int argc, const char * argv[]) {
     MyLinkedList* linkedList = new MyLinkedList();
 
     linkedList->addAtHead(1);
+    linkedList->display();
     linkedList->addAtTail(3);
+    linkedList->display();
     linkedList->addAtIndex(1, 2);  // linked list becomes 1->2->3
-    linkedList->get(1);            // returns 2
+    linkedList->display();
+    std::cout<<"should return 2 here "<<linkedList->get(1)<<std::endl;
+    linkedList->display();
     linkedList->deleteAtIndex(1);  // now the linked list is 1->3
-    linkedList->get(1);            // returns 3
+    std::cout<<"should return 3 here "<<linkedList->get(1)<<std::endl;            // returns 3
+    
     std::cout << "Hello, World!\n";
+    linkedList->display();
     return 0;
 }
