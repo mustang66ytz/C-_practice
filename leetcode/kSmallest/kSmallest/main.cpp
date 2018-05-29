@@ -8,6 +8,7 @@
 
 #include <iostream>
 #include <vector>
+#include <math.h>
 using namespace std;
 
 class Solution{
@@ -25,6 +26,28 @@ public:
         }
         return l;
     }
+    
+    int numSquares(int n) {
+        int count = 0;
+        int root;
+        int curr = n;
+        int minCount = INT_MAX;
+        
+        for(root = sqrt(curr); root>0; root--){
+            curr = n;
+            count = 0;
+            int temproot = root;
+            while(curr>0){
+                curr -= temproot*temproot;
+                temproot = sqrt(curr);
+                count++;
+            }
+            minCount = min(minCount, count);
+        }
+        
+        
+        return minCount;
+    }
 };
 
 int main(int argc, const char * argv[]) {
@@ -33,5 +56,8 @@ int main(int argc, const char * argv[]) {
     int k = 8;
     int res = sol.kthSmallest(matrix, k);
     std::cout << "The kth smallest element is "<< res << endl;
+    
+    int n = 12;
+    cout<<"The minimum number of sqrt is "<<sol.numSquares(n)<<endl;
     return 0;
 }
