@@ -14,11 +14,9 @@ struct SinglyListNode {
 };
 
 class MyLinkedList {
-private:
+public:
     SinglyListNode* head;
     SinglyListNode* tail;
-    
-public:
     /** Initialize your data structure here. */
     MyLinkedList() {
         this->head = NULL;
@@ -49,7 +47,7 @@ public:
     void addAtTail(int val) {
         SinglyListNode *curr = new SinglyListNode(val);
         SinglyListNode *temp = this->head;
-        while(temp->next != NULL){
+        while(!temp->next){
             temp = temp->next;
         }
         temp->next = curr;
@@ -91,7 +89,78 @@ public:
         std::cout<<std::endl;
     }
     
-    SinglyListNode* removeNthFromEnd(SinglyListNode* head, int n) {
+    SinglyListNode* reverseList(SinglyListNode* head) {
+        SinglyListNode* pre = NULL;
+        while(head){
+            SinglyListNode* next = head->next;
+            head->next = pre;
+            pre = head;
+            head = next;
+        }
+        return pre;
+    }
+    
+    SinglyListNode* removeElements(SinglyListNode* head, int val) {
+        while(head!=NULL&&head->val==val)
+        {
+            head= head->next;
+        }
+        SinglyListNode*temp=head;
+        
+        while(temp!=NULL&&temp->next!=NULL)
+        {
+            if(temp->next->val==val)
+                temp->next=temp->next->next;
+            else
+                temp=temp->next;
+        }
+        return head;
+    }
+    
+    SinglyListNode* oddEvenList(SinglyListNode* head) {
+        SinglyListNode* oddHead = new SinglyListNode(0);
+        SinglyListNode* evenHead = new SinglyListNode(0);
+        SinglyListNode* oddPtr = oddHead;
+        SinglyListNode* evenPtr = evenHead;
+        
+        int count = 1;
+        while(head){
+            if(count%2 == 0){
+                evenPtr->next = head;
+                evenPtr = head;
+            }
+            else if(count%2 == 1){
+                oddPtr->next = head;
+                oddPtr = head;
+            }
+            count++;
+            head = head->next;
+        }
+        evenPtr->next = NULL;
+        oddPtr->next = evenHead->next;
+        
+        return oddHead->next;
+    }
+    
+    bool isPalindrome(SinglyListNode* head) {
+        SinglyListNode* original = head;
+        SinglyListNode* pre = NULL;
+        while(original){
+            SinglyListNode* next = original->next;
+            original->next = pre;
+            pre = original;
+            original = next;
+        }
+        
+        SinglyListNode* reversed = pre;
+        while(head){
+            if(head->val!=reversed->val){
+                return false;
+            }
+            head = head->next;
+            reversed = reversed->next;
+        }
+        return true;
         
     }
 };
@@ -123,5 +192,20 @@ int main(int argc, const char * argv[]) {
     
     std::cout << "Hello, World!\n";
     linkedList->display();
+    
+//    SinglyListNode* first = new SinglyListNode(1);
+//    SinglyListNode* second = new SinglyListNode(1);
+//    SinglyListNode* third = new SinglyListNode(2);
+//    SinglyListNode* fourth = new SinglyListNode(1);
+//    first->next = second;
+//    second->next = third;
+//    third->next = fourth;
+    MyLinkedList* testPalind = new MyLinkedList();
+    testPalind->addAtTail(1);
+    testPalind->addAtTail(1);
+    testPalind->addAtTail(2);
+    testPalind->addAtTail(1);
+    bool output = testPalind->isPalindrome(testPalind->head);
+    std::cout<< "test palindrome output: "<< output<<std::endl;
     return 0;
 }
